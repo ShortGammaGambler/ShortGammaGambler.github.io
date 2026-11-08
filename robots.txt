@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.quantumedgealpha.com/sitemap.xml
+Host: https://www.quantumedgealpha.com
