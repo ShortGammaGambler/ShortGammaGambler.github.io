@@ -1,18 +1,48 @@
 {
+  "id": "/",
   "name": "QuantumEdge Alpha | Institutional Quant Analytics",
   "short_name": "QuantumEdge",
-  "start_url": "https://www.quantumedgealpha.com/",
+  "start_url": "/app.html",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#080E1A",
-  "theme_color": "#0A192F",
-  "description": "Institutional-grade quant tools, real-time Greek exposure models (GEX/Vanna/Charm), dynamic Kelly position sizing, and 0DTE volatility scanner for algorithmic retail traders.",
+  "orientation": "any",
+  "background_color": "#0A2540",
+  "theme_color": "#0A2540",
+  "description": "Institutional-grade quant tools: real-time Greek exposure models (GEX/Vanna/Charm), dynamic Kelly position sizing and a 0DTE volatility scanner for self-directed traders.",
   "icons": [
     {
-      "src": "/assets/aistudio/ada83993-5d9d-4698-9c30-28a7d5d2d4ff_5654e8cf.jpeg",
+      "src": "/assets/brand/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/brand/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

@@ -1,0 +1,11 @@
+# Cloudflare Pages redirects (GitHub Pages ignores this file).
+# Canonical host: force www so Google only ever indexes one hostname.
+https://quantumedgealpha.com/*  https://www.quantumedgealpha.com/:splat  301!
+http://quantumedgealpha.com/*   https://www.quantumedgealpha.com/:splat  301!
+
+# Clean URLs used by the in-app footer still resolve everywhere.
+/terms       /terms.html           301
+/privacy     /privacy.html         301
+/risk        /risk-disclosure.html 301
+/disclosure  /risk-disclosure.html 301
+/app         /app.html             301

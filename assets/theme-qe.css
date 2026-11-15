@@ -1,0 +1,54 @@
+
+/* ============================================================
+   QuantumEdge Alpha — brand theme layer (v1)
+   Palette derived from the approved brand mockups.
+   Loaded by both index.html (marketing) and app.html (SPA).
+   ============================================================ */
+:root{
+  --qe-ink:#0A2540;
+  --qe-ink-deep:#061A30;
+  --qe-ink-soft:#123A5E;
+
+  --qe-green:#1FBF75;
+  --qe-green-bright:#34D399;
+  --qe-green-deep:#12A566;
+  --qe-green-wash:#E7F8F0;
+
+  --qe-orange:#F5821F;
+  --qe-orange-lit:#FFB13B;
+  --qe-orange-deep:#E06A0C;
+
+  --qe-cyan:#39C7E8;
+  --qe-rose:#FF4D6D;
+
+  --qe-bg:#F1F6FC;
+  --qe-bg-2:#E3EEF9;
+  --qe-slate:#5B6B80;
+  --qe-slate-soft:#8A99AB;
+  --qe-line:rgba(10,37,64,.10);
+  --qe-glass:rgba(255,255,255,.78);
+
+  --qe-grad-green:linear-gradient(100deg,var(--qe-green-bright) 0%,var(--qe-green) 55%,var(--qe-green-deep) 100%);
+  --qe-grad-orange:linear-gradient(100deg,var(--qe-orange-lit) 0%,var(--qe-orange) 100%);
+  --qe-shadow-sm:0 4px 14px rgba(10,37,64,.07);
+  --qe-shadow-md:0 12px 34px rgba(10,37,64,.10);
+  --qe-shadow-green:0 10px 26px rgba(31,191,117,.32);
+  --qe-shadow-orange:0 12px 28px rgba(245,130,31,.34);
+
+  --qe-font:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --qe-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+::selection{background:rgba(31,191,117,.24);color:var(--qe-ink);}
+
+/* slim, brand-consistent scrollbar for the SPA chrome */
+*{scrollbar-color:rgba(31,191,117,.55) transparent;scrollbar-width:thin;}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(31,191,117,.42);border-radius:99px;border:2px solid transparent;background-clip:content-box;}
+::-webkit-scrollbar-thumb:hover{background:rgba(31,191,117,.68);background-clip:content-box;}
+
+/* opt-in marketing helpers, prefixed so they cannot collide with Tailwind utilities */
+.qe-grad-text-green{background:var(--qe-grad-green);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.qe-grad-text-orange{background:var(--qe-grad-orange);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.qe-glass{background:var(--qe-glass);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);border:1px solid rgba(255,255,255,.65);box-shadow:var(--qe-shadow-md);}

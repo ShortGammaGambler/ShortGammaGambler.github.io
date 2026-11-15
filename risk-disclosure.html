@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Risk Disclosure — QuantumEdge Alpha</title>
+<meta name="description" content="Full risk disclosure for QuantumEdge Alpha: options and 0DTE risk, model limitations of GEX, Vanna and Charm estimates, simulated performance, and Kelly sizing caveats." />
+<meta name="theme-color" content="#0A2540" />
+<link rel="canonical" href="https://www.quantumedgealpha.com/risk-disclosure.html" />
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+<link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="preload" href="/assets/theme-qe.css" as="style" />
+<link rel="stylesheet" href="/assets/theme-qe.css" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="QuantumEdge Alpha" />
+<meta property="og:url" content="https://www.quantumedgealpha.com/risk-disclosure.html" />
+<meta property="og:title" content="Risk Disclosure — QuantumEdge Alpha" />
+<meta property="og:description" content="Full risk disclosure for QuantumEdge Alpha: options and 0DTE risk, model limitations of GEX, Vanna and Charm estimates, simulated performance, and Kelly sizing caveats." />
+<meta property="og:image" content="https://www.quantumedgealpha.com/assets/brand/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root{--ink:#0A2540;--ink-soft:#3C546E;--green:#1FBF75;--green-b:#34D399;--orange:#F5821F;--cyan:#39C7E8;--bg:#F1F6FC;--line:#DCE7F3;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.68;font-size:16.5px;-webkit-font-smoothing:antialiased}
+a{color:#127a4e;text-decoration:none;border-bottom:1px solid rgba(31,191,117,.35)}
+a:hover{border-bottom-color:var(--green)}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 24px}
+.docnav{position:sticky;top:0;z-index:20;background:rgba(241,246,252,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.docnav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;font-size:12.5px;color:var(--ink);border:0}
+.brand img{width:28px;height:28px;display:block}
+.brand .e{color:var(--green)}.brand .a{color:var(--orange)}
+.docnav nav{display:flex;gap:18px;font-size:13px;font-weight:600;color:var(--ink-soft);flex-wrap:wrap}
+.docnav nav a{border:0;color:inherit}
+.docnav nav a:hover{color:var(--ink)}
+.doc{max-width:800px;margin:0 auto;padding:56px 24px 72px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
+h1{font-size:clamp(30px,4.6vw,46px);line-height:1.08;letter-spacing:-.025em;margin:0 0 14px;font-weight:800}
+.updated{font-family:var(--mono);font-size:12px;color:#6B7F94;margin:0 0 34px}
+h2{font-size:20px;letter-spacing:-.01em;margin:38px 0 10px;font-weight:800}
+h3{font-size:15.5px;margin:24px 0 8px;font-weight:700;color:var(--ink)}
+p{margin:0 0 14px;color:var(--ink-soft)}
+ul{margin:0 0 16px;padding-left:20px;color:var(--ink-soft)}
+li{margin:0 0 7px}
+strong{color:var(--ink)}
+.callout{background:#fff;border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:10px;padding:18px 20px;margin:0 0 26px;box-shadow:0 12px 30px -22px rgba(10,37,64,.5)}
+.callout p:last-child{margin:0}
+.toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:0 0 30px}
+.toc ol{margin:0;padding-left:18px;font-size:14px;color:var(--ink-soft)}
+.toc a{border:0}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+.docfoot{border-top:1px solid var(--line);padding:26px 24px 52px;text-align:center;font-size:12.5px;color:#7A8CA0}
+.docfoot a{border:0;margin:0 8px;color:#3C546E;font-weight:600}
+@media(max-width:640px){.doc{padding:38px 20px 60px}.docnav nav{font-size:12px;gap:12px}}
+</style>
+</head>
+<body>
+<header class="docnav">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/brand/mark.svg" alt="" width="28" height="28" /><span>QUANTUM <span class="e">EDGE</span> <span class="a">ALPHA</span></span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/#features">Technology</a>
+      <a href="/app.html">Platform</a>
+      <a href="/risk-disclosure.html">Risk</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+<main class="doc">
+  <p class="eyebrow">Legal · Required disclosure</p>
+  <h1>Risk Disclosure</h1>
+  <p class="updated">Last updated 8 November 2026 · applies to www.quantumedgealpha.com and all QuantumEdge Alpha software</p>
+
+<div class="callout">
+  <p><strong>Short version.</strong> QuantumEdge Alpha is analytics software, not a broker and not an adviser. Options — especially 0DTE options — can lose money fast and can lose more than you deposited. Every number the platform shows you is a model estimate or a synthetic demonstration value. You are responsible for every order you place.</p>
+</div>
+
+<div class="toc">
+  <ol>
+    <li><a href="#r1">Nature of the service</a></li>
+    <li><a href="#r2">Options and 0DTE risk</a></li>
+    <li><a href="#r3">Model output is an estimate</a></li>
+    <li><a href="#r4">Data quality and latency</a></li>
+    <li><a href="#r5">Demonstration and simulated performance</a></li>
+    <li><a href="#r6">Position sizing and the Kelly module</a></li>
+    <li><a href="#r7">No fiduciary duty</a></li>
+    <li><a href="#r8">Third-party data and attributions</a></li>
+    <li><a href="#r9">Technology and availability</a></li>
+    <li><a href="#r10">Your responsibilities</a></li>
+  </ol>
+</div>
+
+<h2 id="r1">1. Nature of the service</h2>
+<p>QuantumEdge Alpha provides software for quantitative options analytics and education. It does not execute, route, hold, clear, or settle orders; it does not hold customer funds or securities; it does not manage accounts or exercise discretion; and it does not act as a fiduciary. QuantumEdge Alpha is not a registered investment adviser, broker-dealer, futures commission merchant, or commodity trading advisor with any securities or derivatives regulator in any jurisdiction.</p>
+<p>Nothing on this website, in the application, or in any email, message, video, or document we publish is a recommendation, solicitation, or offer to buy or sell any security, option, or derivative. We do not provide personalised investment advice and we have not considered your financial situation, objectives, tax position, existing holdings, or risk tolerance at any point.</p>
+
+<h2 id="r2">2. Options and 0DTE risk</h2>
+<p>Options involve a high degree of risk and are not suitable for every investor. Key risks include:</p>
+<ul>
+  <li><strong>Total loss of premium.</strong> Long options can expire worthless, and short options can be assigned.</li>
+  <li><strong>Leverage.</strong> Small moves in the underlying can produce large percentage losses. Uncovered short positions can lose more than the funds in your account.</li>
+  <li><strong>0DTE and short-dated contracts.</strong> Same-day and next-day expiries can move from profit to total loss within minutes, and their pricing is dominated by gamma and pin risk rather than by any directional thesis.</li>
+  <li><strong>Liquidity and spreads.</strong> Quotes may be wide, stale, or absent. Market orders can fill far from the displayed price, and stop orders do not guarantee an execution price.</li>
+  <li><strong>Assignment, exercise, and expiration mechanics.</strong> Pin risk, early assignment on short American-style options, and automatic exercise thresholds can create unintended stock or futures positions, including overnight and weekend exposure.</li>
+  <li><strong>Margin and house rules.</strong> Your broker may liquidate positions without notice. Margin requirements can change intraday.</li>
+  <li><strong>Gaps and halts.</strong> Overnight gaps, trading halts, index rebalances, and macro events can render your risk plan unusable.</li>
+</ul>
+<p>Only trade with risk capital you can afford to lose entirely, and size positions so that being wrong is survivable.</p>
+
+<h2 id="r3">3. Model output is an estimate</h2>
+<p>Gamma exposure (GEX), Vanna, and Charm figures are <strong>model estimates</strong>, not observations. They are derived from third-party options chains and from assumptions about dealer positioning — most commonly the assumption that dealers are short gamma and long vanna or charm in aggregate. Those assumptions can be wrong at the exact moments that matter, including around large expiries and volatility shocks. Open-interest based exposure is inherently backwards-looking: it describes positions that existed, not positions that will be defended.</p>
+<p>Consequences to keep in mind:</p>
+<ul>
+  <li>A gamma flip level, zero-gamma point, or charm-weighted drift estimate is a description of a model, not a level the market is obliged to respect.</li>
+  <li>Scanner scores, regime classifications (including any hidden-Markov or clustering label), toxicity indicators, and probabilities are heuristics. They are not forecasts and carry no stated or implied accuracy.</li>
+  <li>Model output is not validated for your account size, holding period, borrow costs, tax position, or execution venue.</li>
+  <li>Errors propagate: bad inputs, stale chains, or a wrong contract multiplier produce confidently wrong output. Verify anything you trade against your broker's own data.</li>
+</ul>
+
+<h2 id="r4">4. Data quality and latency</h2>
+<p>Market data may be delayed, aggregated, sampled, interpolated, or revised. Displayed prices, Greeks, and exposures may differ from your broker's, and may update less frequently than you assume. Availability of any live data feed depends on third-party vendors and is not guaranteed. During high-volatility periods — precisely when these tools are most attractive — feeds are most likely to lag, drop, or deliver corrupt prints.</p>
+
+<h2 id="r5">5. Demonstration and simulated performance</h2>
+<p>Portions of this site and of the application run in demonstration mode with synthetic data. Accounts, balances, positions, trades, P&amp;L, scanner candidates, and performance charts shown in the demo are generated for illustration. They do not represent any real account, customer, or result, and they are labelled as illustrative where presented.</p>
+<p>Hypothetical, backtested, and simulated results have well-known limitations. They are prepared with hindsight, do not reflect actual liquidity, slippage, commission, market impact, or the psychological pressure of risking real capital, and are not a reliable indicator of future results. No representation is made that any account will or is likely to achieve profits or losses similar to those shown. Past performance does not indicate future results.</p>
+
+<h2 id="r6">6. Position sizing and the Kelly module</h2>
+<p>Kelly-criterion and fractional-Kelly outputs depend entirely on the win-rate and payoff estimates fed into them. Those inputs are estimates, and Kelly sizing is mathematically aggressive: it maximises long-run growth only when the inputs are correct, and it produces severe drawdowns when they are not. We therefore present sizing figures as illustrations of a method, not as advice to risk a specific percentage of your capital. A negative or undefined fraction means the method cannot be applied — it does not mean a position is safe in reverse.</p>
+
+<h2 id="r7">7. No fiduciary duty</h2>
+<p>Your use of this software creates no advisory, fiduciary, agency, or employment relationship. We owe you no duty to warn you about a specific position, to monitor your risk, to intervene in your trading, or to inform you of events affecting a security you hold. No communication from us should be interpreted as an assumption of that duty.</p>
+
+<h2 id="r8">8. Third-party data and attributions</h2>
+<p>Market and reference data are supplied by third parties under licence. Such data is provided "as is", may be delayed, and may not be redistributed, resold, or used to build a competing product. We may suspend or withdraw any data element on short notice if a vendor requires it. Any exchange or vendor marks displayed remain the property of their owners.</p>
+
+<h2 id="r9">9. Technology and availability</h2>
+<p>The service is provided on an "as is" and "as available" basis, without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, accuracy, and non-infringement. We do not warrant uninterrupted or error-free operation. Maintenance, deployment, provider outages, and third-party failures may make the platform unavailable without notice. Do not rely on the platform as your only risk monitor or as a substitute for broker-side risk controls.</p>
+<p>The word "quantum" in our name refers to our brand and modelling vocabulary. This product does not use quantum computing hardware.</p>
+
+<h2 id="r10">10. Your responsibilities</h2>
+<ul>
+  <li>Verify every price, Greek, and exposure figure against your broker before acting on it.</li>
+  <li>Maintain your own risk limits, stop discipline, and record-keeping, including for tax and regulatory purposes.</li>
+  <li>Ensure that trading the instruments you trade is lawful for you in your jurisdiction and permitted under your broker agreement.</li>
+  <li>Consult a licensed financial, tax, and legal professional before acting. Nothing here substitutes for that advice.</li>
+  <li>Accept that you, and only you, are responsible for the orders you place.</li>
+</ul>
+
+<hr />
+<p><strong>Contact.</strong> Questions about this disclosure: <a href="mailto:legal@quantumedgealpha.com">legal@quantumedgealpha.com</a>. See also our <a href="/terms.html">Terms of Use</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
+
+</main>
+<div class="docfoot">
+  <p><a href="/risk-disclosure.html">Risk Disclosure</a><a href="/terms.html">Terms of Use</a><a href="/privacy.html">Privacy Policy</a><a href="/">Home</a></p>
+  <p>&copy; 2026 QuantumEdge Alpha. QuantumEdge Alpha is not a broker-dealer, investment adviser, or futures commission merchant. Nothing on this site is investment advice.</p>
+</div>
+</body>
+</html>
