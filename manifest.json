@@ -1,0 +1,18 @@
+{
+  "name": "QuantumEdge Alpha | Institutional Quant Analytics",
+  "short_name": "QuantumEdge",
+  "start_url": "https://www.quantumedgealpha.com/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080E1A",
+  "theme_color": "#0A192F",
+  "description": "Institutional-grade quant tools, real-time Greek exposure models (GEX/Vanna/Charm), dynamic Kelly position sizing, and 0DTE volatility scanner for algorithmic retail traders.",
+  "icons": [
+    {
+      "src": "/assets/aistudio/ada83993-5d9d-4698-9c30-28a7d5d2d4ff_5654e8cf.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
