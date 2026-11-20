@@ -11,6 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<script>
+  (function(){try{var t=localStorage.getItem('qe-theme');var d=t?t==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();
+</script>
 <style>
   :root{--ink:#0A2540;--green:#1FBF75;--slate:#5B6B80;--bg:#F1F6FC;}
   *{box-sizing:border-box}
@@ -40,6 +43,13 @@
     font-family:'JetBrains Mono',monospace;font-size:11px}
   .links a{color:#00A87A;text-decoration:none}
   .links a:hover{text-decoration:underline}
+  html.dark{--ink:#F1F5F9;--slate:#94A3B8;--bg:#080E1A}
+  html.dark body{background:radial-gradient(46% 38% at 78% 6%,rgba(31,191,117,.14),transparent 70%),radial-gradient(40% 34% at 10% 0%,rgba(57,199,232,.12),transparent 72%),linear-gradient(180deg,#060B15 0%,var(--bg) 60%,#0D1729 100%)}
+  html.dark .card{background:rgba(14,21,36,.88);border-color:rgba(255,255,255,.10);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  html.dark .code{color:#34D399;background:rgba(31,191,117,.14);border-color:rgba(52,211,153,.28)}
+  html.dark a.ghost{color:#F1F5F9;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);box-shadow:none}
+  html.dark .links{border-top-color:rgba(255,255,255,.10)}
+  html.dark .links a{color:#34D399}
 </style>
 </head>
 <body>

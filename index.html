@@ -34,6 +34,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<script>
+  (function(){try{var t=localStorage.getItem('qe-theme');var d=t?t==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();
+</script>
 <!-- brand theme layer is inlined below (no extra request) -->
 <style>
 /* ===== inlined assets/theme-qe.css ===== */
@@ -395,10 +398,10 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
 }
 
 /* ---- FAQ ---- */
-.faq{padding:72px 0 78px;background:var(--paper,#F1F6FC)}
+.faq{padding:52px 34px 58px;border-radius:26px;background:rgba(255,255,255,.55);border:1px solid var(--qe-line);}
 .faq .section-title{margin-bottom:10px}
-.faq-lede{max-width:640px;color:#4A6178;margin:0 0 30px;font-size:16.5px;line-height:1.68}
-.faq-list{display:grid;gap:10px;max-width:860px}
+.faq-lede{max-width:640px;color:#4A6178;margin:0 0 26px;font-size:16px;line-height:1.68}
+.faq-list{display:grid;gap:10px;max-width:100%}
 .faq-list details{background:#fff;border:1px solid #DCE7F3;border-radius:12px;padding:0 20px;box-shadow:0 14px 34px -30px rgba(10,37,64,.55)}
 .faq-list summary{cursor:pointer;list-style:none;padding:17px 34px 17px 0;font-weight:700;font-size:15.5px;color:#0A2540;position:relative;letter-spacing:-.01em}
 .faq-list summary::-webkit-details-marker{display:none}
@@ -406,7 +409,94 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
 .faq-list details[open] summary::after{content:"\2013"}
 .faq-list details p{margin:0 0 18px;color:#4A6178;font-size:15px;line-height:1.7}
 .faq-list details p:last-child{margin-bottom:18px}
-@media(max-width:640px){.faq{padding:52px 0 58px}}
+@media(max-width:640px){.faq{padding:36px 20px 42px}}
+
+/* ---- theme toggle & dark mode ---- */
+.nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0;}
+.nav .nav-actions .btn{margin-left:0;}
+.theme-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:999px;border:1px solid rgba(10,37,64,.10);
+  background:rgba(255,255,255,.72);color:#33475F;cursor:pointer;
+  transition:background .18s,border-color .18s,color .18s,transform .18s;
+}
+.theme-btn:hover{background:#fff;color:var(--qe-ink);transform:translateY(-1px);}
+.theme-btn svg{width:18px;height:18px;}
+.theme-btn .ico-sun{display:none;}
+html.dark .theme-btn .ico-sun{display:block;color:#FBBF24;}
+html.dark .theme-btn .ico-moon{display:none;}
+
+html.dark{
+  --qe-ink:#F1F5F9;
+  --qe-ink-deep:#FFFFFF;
+  --qe-ink-soft:#CBD5E1;
+  --qe-bg:#080E1A;
+  --qe-bg-2:#0D1729;
+  --qe-slate:#94A3B8;
+  --qe-slate-soft:#7C8FA6;
+  --qe-line:rgba(255,255,255,.10);
+  --qe-glass:rgba(14,21,36,.82);
+  --qe-shadow-sm:0 4px 14px rgba(0,0,0,.32);
+  --qe-shadow-md:0 12px 34px rgba(0,0,0,.42);
+}
+html.dark .sky::before{
+  background:
+    radial-gradient(46% 38% at 78% 8%,  rgba(31,191,117,.16) 0%, transparent 70%),
+    radial-gradient(40% 34% at 12% 0%,  rgba(57,199,232,.14) 0%, transparent 72%),
+    radial-gradient(34% 30% at 96% 44%, rgba(245,130,31,.12) 0%, transparent 74%),
+    linear-gradient(180deg,#060B15 0%, #080E1A 42%, #0B1424 100%);
+}
+html.dark .sky::after{
+  background-image:
+    linear-gradient(to right, rgba(148,184,224,.065) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148,184,224,.065) 1px, transparent 1px);
+}
+html.dark .nav{
+  background:rgba(12,20,35,.82);
+  border-color:rgba(255,255,255,.10);
+  box-shadow:0 12px 36px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.06) inset;
+}
+html.dark .nav-links a{color:#CBD5E1;}
+html.dark .nav-links a:hover{color:#FFFFFF;}
+html.dark .theme-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:#CBD5E1;}
+html.dark .theme-btn:hover{background:rgba(255,255,255,.14);color:#FFFFFF;}
+html.dark .eyebrow{color:#34D399;background:rgba(31,191,117,.14);border-color:rgba(52,211,153,.28);}
+html.dark .btn-ghost{
+  color:#F1F5F9;background:rgba(15,26,46,.78);
+  border-color:rgba(255,255,255,.14);
+  box-shadow:0 8px 22px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.08) inset;
+}
+html.dark .btn-ghost:hover{background:#15243D;}
+html.dark .hero-art svg [stroke="#0A2540"]{stroke:#1B3E68;}
+html.dark .hero-art svg [fill="#0A2540"]{fill:#1B3E68;}
+html.dark .features-head a{color:#34D399;}
+html.dark .card{
+  background:linear-gradient(158deg,#0F182A 0%,#0B1220 58%,#080E1A 100%);
+  border-color:rgba(255,255,255,.09);
+  box-shadow:0 14px 30px rgba(0,0,0,.38),0 1px 0 rgba(255,255,255,.05) inset;
+}
+html.dark .card-ico{background:#132138;border-color:rgba(255,255,255,.10);box-shadow:0 8px 18px rgba(0,0,0,.35);}
+html.dark .card-ico svg [stroke="#0A2540"]{stroke:#E2E8F0;}
+html.dark .card-ico svg [fill="#0A2540"]{fill:#E2E8F0;}
+html.dark .card .tick{color:#34D399;background:rgba(31,191,117,.15);}
+html.dark .faq{background:rgba(14,22,38,.72);border-color:rgba(255,255,255,.08);}
+html.dark .faq-lede{color:#94A3B8;}
+html.dark .faq-list details{background:#0E1626;border-color:rgba(255,255,255,.09);box-shadow:0 14px 34px -26px rgba(0,0,0,.75);}
+html.dark .faq-list summary{color:#F1F5F9;}
+html.dark .faq-list details p{color:#94A3B8;}
+html.dark .faq-list details a{color:#34D399;}
+html.dark .disc-card{background:rgba(14,22,38,.86);border-color:rgba(255,255,255,.09);}
+html.dark .disc-foot{background:linear-gradient(158deg,#0E1B30,#091322);border:1px solid rgba(255,255,255,.10);}
+html.dark footer{background:rgba(8,14,26,.85);border-top-color:rgba(255,255,255,.09);}
+html.dark .foot-links{color:#CBD5E1;}
+html.dark .foot-links a:hover{color:#34D399;}
+html.dark .legal strong{color:#E2E8F0;}
+html.dark .disclaimer-box{background:rgba(245,130,31,.10);border-color:rgba(245,130,31,.26);color:#FCD39D;}
+html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:rgba(245,130,31,.30);}
+@media (max-width:900px){
+  .nav-actions .nav-cta{display:none;}
+  .nav-toggle{display:inline-flex;}
+}
 </style>
 <style>
 /* ---- perf: skip layout/paint work for below-the-fold blocks ---- */
@@ -534,8 +624,14 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
         <a href="#capabilities">Research</a>
         <a href="#footer">About Us</a>
       </div>
-      <a class="btn btn-green nav-toggle" href="/app.html">Get Started</a>
-      <a class="btn btn-green nav-cta" href="/app.html">Get Started</a>
+      <div class="nav-actions">
+        <button type="button" class="theme-btn" id="qe-theme-toggle" aria-label="Toggle dark theme" title="Toggle theme">
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a class="btn btn-green nav-toggle" href="/app.html">Get Started</a>
+        <a class="btn btn-green nav-cta" href="/app.html">Get Started</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -740,7 +836,6 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
 
 
     <section class="faq" id="faq">
-      <div class="wrap">
         <h2 class="section-title">Questions traders actually ask</h2>
         <p class="faq-lede">Straight answers about what this software is, what it is not, and where the numbers come from.</p>
         <div class="faq-list">
@@ -752,11 +847,9 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
           <details><summary>How is position size calculated?</summary><p>The sizing module illustrates Kelly-criterion and fractional-Kelly methods. Its output depends entirely on the win-rate and payoff inputs supplied, so it is shown to explain a method — not to recommend risking a specific percentage of your capital.</p></details>
           <details><summary>Can I cancel at any time?</summary><p>Yes. Plans renew automatically until cancelled, and you can cancel from your account settings at any time. Access continues to the end of the paid term; see the <a href="/terms.html">Terms of Use</a> for billing detail.</p></details>
         </div>
-      </div>
     </section>
 
     <section class="disclosures" id="disclosures">
-      <div class="wrap">
       <div class="disc-head">
         <h2 class="section-title">Disclosures &amp; risk</h2>
         <p class="disc-lede">Plain-language disclosures required for any product that models markets. Read them before you size a position.</p>
@@ -801,7 +894,6 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
           <a href="/terms.html">Terms of use</a>
           <a href="/privacy.html">Privacy policy</a>
         </p>
-      </div>
       </div>
     </section>
   </div>
@@ -848,6 +940,23 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+  (function(){
+    var btn = document.getElementById('qe-theme-toggle');
+    if(!btn) return;
+    function sync(){
+      var dark = document.documentElement.classList.contains('dark');
+      btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      btn.title = dark ? 'Switch to Light theme' : 'Switch to Dark theme';
+    }
+    sync();
+    btn.addEventListener('click', function(){
+      var dark = !document.documentElement.classList.contains('dark');
+      document.documentElement.classList.toggle('dark', dark);
+      try { localStorage.setItem('qe-theme', dark ? 'dark' : 'light'); } catch(e) {}
+      sync();
+      window.dispatchEvent(new Event('qe-theme-change'));
+    });
+  })();
   // smooth in-page anchors already handled by CSS; keep nav pill compact on scroll
 </script>
 
@@ -858,7 +967,8 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
   if(!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d', { alpha: true });
   var TAU = Math.PI * 2;
-  var INK = '10,37,64', GREEN = '31,191,117', CYAN = '39,199,232', ORANGE = '245,130,31';
+  var GREEN = '31,191,117', CYAN = '39,199,232', ORANGE = '245,130,31';
+  function getInk(){ return document.documentElement.classList.contains('dark') ? '148,184,224' : '10,37,64'; }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W = 0, H = 0, dpr = 1, stars = [], atoms = [], t = 0, last = 0, on = true, started = false;
 
@@ -877,7 +987,7 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
         s: 0.35 + Math.random() * 1.1,
         vx: (Math.random() - 0.5) * 0.055,
         vy: (Math.random() - 0.5) * 0.055,
-        c: near ? (Math.random() < 0.55 ? GREEN : CYAN) : INK
+        c: near ? (Math.random() < 0.55 ? GREEN : CYAN) : null
       });
     }
     var scale = Math.min(W, H) || 400;
@@ -914,12 +1024,12 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
   }
 
   function starLayer(){
-    var i, j, st, k;
+    var i, j, st, k, ink = getInk();
     for(i = 0; i < stars.length; i++){
       st = stars[i];
       var tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * st.s + st.a));
       ctx.globalAlpha = 0.10 + 0.42 * tw * st.z;
-      ctx.fillStyle = 'rgb(' + st.c + ')';
+      ctx.fillStyle = 'rgb(' + (st.c || ink) + ')';
       ctx.beginPath();
       ctx.arc(st.x, st.y, st.r, 0, TAU);
       ctx.fill();
@@ -938,7 +1048,7 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
       (grid[key] || (grid[key] = [])).push(st);
     }
     ctx.lineWidth = 0.85;
-    ctx.strokeStyle = 'rgb(' + INK + ')';
+    ctx.strokeStyle = 'rgb(' + ink + ')';
     for(i = 0; i < stars.length; i++){
       st = stars[i];
       var gx = Math.floor(st.x / cell), gy = Math.floor(st.y / cell);
@@ -1068,6 +1178,7 @@ footer{border-top:1px solid var(--qe-line);padding:30px 0 44px;background:rgba(2
     else if(on){ start(); }
   });
 
+  window.addEventListener('qe-theme-change', function(){ draw(0); });
   if(document.readyState === 'complete') resize();
   else window.addEventListener('load', resize, { once: true });
   resize();

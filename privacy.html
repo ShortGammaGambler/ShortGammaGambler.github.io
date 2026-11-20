@@ -14,6 +14,9 @@
 <link rel="manifest" href="/manifest.json" />
 <link rel="preload" href="/assets/theme-qe.css" as="style" />
 <link rel="stylesheet" href="/assets/theme-qe.css" />
+<script>
+  (function(){try{var t=localStorage.getItem('qe-theme');var d=t?t==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();
+</script>
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="QuantumEdge Alpha" />
 <meta property="og:url" content="https://www.quantumedgealpha.com/privacy.html" />
@@ -56,6 +59,21 @@ hr{border:0;border-top:1px solid var(--line);margin:34px 0}
 .docfoot{border-top:1px solid var(--line);padding:26px 24px 52px;text-align:center;font-size:12.5px;color:#7A8CA0}
 .docfoot a{border:0;margin:0 8px;color:#3C546E;font-weight:600}
 @media(max-width:640px){.doc{padding:38px 20px 60px}.docnav nav{font-size:12px;gap:12px}}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.72);color:var(--ink-soft);cursor:pointer;flex-shrink:0;transition:background .18s,color .18s}
+.theme-btn:hover{background:#fff;color:var(--ink)}
+.theme-btn svg{width:16px;height:16px}
+.theme-btn .ico-sun{display:none}
+html.dark .theme-btn .ico-sun{display:block;color:#FBBF24}
+html.dark .theme-btn .ico-moon{display:none}
+html.dark{--ink:#F1F5F9;--ink-soft:#A7B8CC;--bg:#080E1A;--line:rgba(255,255,255,.10)}
+html.dark a{color:#34D399;border-bottom-color:rgba(52,211,153,.35)}
+html.dark .docnav{background:rgba(10,17,30,.88)}
+html.dark .theme-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:#CBD5E1}
+html.dark .theme-btn:hover{background:rgba(255,255,255,.14);color:#FFF}
+html.dark .updated{color:#8FA4BD}
+html.dark .callout,html.dark .toc{background:#0E1524;box-shadow:0 12px 30px -22px rgba(0,0,0,.75)}
+html.dark .docfoot{color:#8FA4BD}
+html.dark .docfoot a{color:#CBD5E1}
 </style>
 </head>
 <body>
@@ -70,6 +88,10 @@ hr{border:0;border-top:1px solid var(--line);margin:34px 0}
       <a href="/terms.html">Terms</a>
       <a href="/privacy.html">Privacy</a>
     </nav>
+    <button type="button" class="theme-btn" id="qe-theme-toggle" aria-label="Toggle dark theme" title="Toggle theme">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
 </header>
 <main class="doc">
@@ -131,5 +153,8 @@ hr{border:0;border-top:1px solid var(--line);margin:34px 0}
   <p><a href="/risk-disclosure.html">Risk Disclosure</a><a href="/terms.html">Terms of Use</a><a href="/privacy.html">Privacy Policy</a><a href="/">Home</a></p>
   <p>&copy; 2026 QuantumEdge Alpha. QuantumEdge Alpha is not a broker-dealer, investment adviser, or futures commission merchant. Nothing on this site is investment advice.</p>
 </div>
+<script>
+  (function(){var b=document.getElementById('qe-theme-toggle');if(!b)return;b.addEventListener('click',function(){var d=!document.documentElement.classList.contains('dark');document.documentElement.classList.toggle('dark',d);try{localStorage.setItem('qe-theme',d?'dark':'light');}catch(e){}});})();
+</script>
 </body>
 </html>
