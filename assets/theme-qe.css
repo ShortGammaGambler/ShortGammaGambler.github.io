@@ -20,6 +20,12 @@
 
   --qe-cyan:#39C7E8;
   --qe-rose:#FF4D6D;
+  --qe-teal:#13A89E;
+  --qe-teal-deep:#04484B;
+  --qe-ice:#8AE4F2;
+  --qe-cobalt:#2962FF;
+  --qe-crimson:#E63946;
+  --qe-violet:#8B5CF6;
 
   --qe-bg:#F1F6FC;
   --qe-bg-2:#E3EEF9;
@@ -43,26 +49,29 @@ html.dark{
   --qe-ink:#F1F5F9;
   --qe-ink-deep:#FFFFFF;
   --qe-ink-soft:#CBD5E1;
-  --qe-bg:#080E1A;
-  --qe-bg-2:#0D1729;
+  --qe-bg:#050B11;
+  --qe-bg-2:#0A192F;
   --qe-slate:#94A3B8;
   --qe-slate-soft:#7C8FA6;
-  --qe-line:rgba(255,255,255,.10);
-  --qe-glass:rgba(14,21,36,.82);
-  --qe-shadow-sm:0 4px 14px rgba(0,0,0,.28);
-  --qe-shadow-md:0 12px 34px rgba(0,0,0,.40);
+  --qe-line:rgba(138,228,242,.13);
+  --qe-glass:rgba(7,24,36,.84);
+  --qe-shadow-sm:0 4px 14px rgba(0,0,0,.32);
+  --qe-shadow-md:0 12px 34px rgba(0,0,0,.44);
 }
 
-html.dark ::selection{background:rgba(31,191,117,.30);color:#FFFFFF;}
+html.dark ::selection{background:rgba(19,168,158,.32);color:#FFFFFF;}
 
 ::selection{background:rgba(31,191,117,.24);color:var(--qe-ink);}
 
 /* slim, brand-consistent scrollbar for the SPA chrome */
 *{scrollbar-color:rgba(31,191,117,.55) transparent;scrollbar-width:thin;}
+html.dark *{scrollbar-color:rgba(19,168,158,.55) transparent;}
 ::-webkit-scrollbar{width:10px;height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(31,191,117,.42);border-radius:99px;border:2px solid transparent;background-clip:content-box;}
 ::-webkit-scrollbar-thumb:hover{background:rgba(31,191,117,.68);background-clip:content-box;}
+html.dark ::-webkit-scrollbar-thumb{background:rgba(19,168,158,.55);}
+html.dark ::-webkit-scrollbar-thumb:hover{background:rgba(19,168,158,.82);}
 
 /* opt-in marketing helpers, prefixed so they cannot collide with Tailwind utilities */
 .qe-grad-text-green{background:var(--qe-grad-green);-webkit-background-clip:text;background-clip:text;color:transparent;}

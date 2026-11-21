@@ -1,5 +1,5 @@
 /* QuantumEdge Alpha + AXIOM QUANTUM lightweight network-first PWA service worker */
-const CACHE_NAME = 'qea-axiom-v1';
+const CACHE_NAME = 'qea-axiom-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(self.skipWaiting());

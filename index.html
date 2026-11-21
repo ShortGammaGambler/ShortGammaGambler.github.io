@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>QuantumEdge Alpha — 0DTE GEX, Vanna &amp; Charm Options Analytics</title>
 <meta name="description" content="QuantumEdge Alpha: institutional-style options analytics — Greek exposure models, dynamic Kelly sizing and a volatility scanner for self-directed traders." />
-<meta name="theme-color" content="#0A2540" />
+<meta name="theme-color" content="#043D40" />
 <link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon.png" />
@@ -30,13 +30,14 @@
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
 <meta name="googlebot" content="index,follow" />
 <link rel="preload" href="/assets/brand/mark.svg" as="image" type="image/svg+xml" fetchpriority="high" />
+<link rel="preload" href="/assets/previews/app-fusion.webp" as="image" type="image/webp" />
 <link rel="preload" href="/assets/brand/hero-quantum-light.webp" as="image" type="image/webp" />
 <link rel="manifest" href="/manifest.json" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 <script>
-  (function(){try{var t=localStorage.getItem('qe-theme');var d=t?t==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();
+  (function(){try{var t=localStorage.getItem('qe-theme');var d=t?t==='dark':true;document.documentElement.classList.toggle('dark',d);}catch(e){document.documentElement.classList.add('dark');}})();
 </script>
 <!-- brand theme layer is inlined below (no extra request) -->
 <style>
@@ -63,6 +64,12 @@
 
   --qe-cyan:#39C7E8;
   --qe-rose:#FF4D6D;
+  --qe-teal:#13A89E;
+  --qe-teal-deep:#04484B;
+  --qe-ice:#8AE4F2;
+  --qe-cobalt:#2962FF;
+  --qe-crimson:#E63946;
+  --qe-violet:#8B5CF6;
 
   --qe-bg:#F1F6FC;
   --qe-bg-2:#E3EEF9;
@@ -201,7 +208,7 @@ main,header,footer{position:relative;z-index:1;}
 .hero{
   display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
   gap:28px;align-items:center;
-  padding:clamp(20px,2.8vw,38px) 0 clamp(14px,2vw,24px);
+  padding:clamp(16px,2.2vw,30px) 0 clamp(12px,1.8vw,22px);
 }
 .eyebrow{
   display:inline-flex;align-items:center;gap:9px;
@@ -354,11 +361,14 @@ h2.section-title{font-size:clamp(21px,2.2vw,27px);font-weight:800;letter-spacing
   margin:0 0 clamp(46px,6vw,80px);
   border-radius:26px;padding:clamp(26px,3.4vw,44px);
   color:#EAF3FB;position:relative;overflow:hidden;
+  border:1px solid rgba(138,228,242,.18);
   background:
-    radial-gradient(60% 120% at 12% 0%, rgba(31,191,117,.34) 0%, transparent 62%),
-    radial-gradient(50% 110% at 88% 8%, rgba(255,130,31,.26) 0%, transparent 64%),
-    linear-gradient(158deg,#0B2138 0%,#061527 58%,#04101C 100%);
-  box-shadow:0 24px 60px rgba(6,21,39,.28);
+    radial-gradient(60% 120% at 10% 0%, rgba(19,168,158,.38) 0%, transparent 62%),
+    radial-gradient(48% 110% at 88% 8%, rgba(41,98,255,.26) 0%, transparent 64%),
+    radial-gradient(40% 90% at 72% 96%, rgba(139,92,246,.20) 0%, transparent 64%),
+    radial-gradient(30% 70% at 6% 96%, rgba(230,57,70,.16) 0%, transparent 62%),
+    linear-gradient(158deg,#043D40 0%,#082538 36%,#0A192F 70%,#050B11 100%);
+  box-shadow:0 24px 60px rgba(4,16,28,.36);
 }
 .band::before{
   content:"";position:absolute;inset:0;
@@ -454,72 +464,218 @@ html.dark{
   --qe-ink:#F1F5F9;
   --qe-ink-deep:#FFFFFF;
   --qe-ink-soft:#CBD5E1;
-  --qe-bg:#080E1A;
-  --qe-bg-2:#0D1729;
+  --qe-bg:#050B11;
+  --qe-bg-2:#0A192F;
   --qe-slate:#94A3B8;
   --qe-slate-soft:#7C8FA6;
-  --qe-line:rgba(255,255,255,.10);
-  --qe-glass:rgba(14,21,36,.82);
+  --qe-line:rgba(138,228,242,.13);
+  --qe-glass:rgba(7,24,36,.84);
   --qe-shadow-sm:0 4px 14px rgba(0,0,0,.32);
-  --qe-shadow-md:0 12px 34px rgba(0,0,0,.42);
+  --qe-shadow-md:0 12px 34px rgba(0,0,0,.44);
 }
 html.dark .sky::before{
   background:
-    radial-gradient(46% 38% at 78% 8%,  rgba(31,191,117,.16) 0%, transparent 70%),
-    radial-gradient(40% 34% at 12% 0%,  rgba(57,199,232,.14) 0%, transparent 72%),
-    radial-gradient(34% 30% at 96% 44%, rgba(245,130,31,.12) 0%, transparent 74%),
-    linear-gradient(180deg,#060B15 0%, #080E1A 42%, #0B1424 100%);
+    radial-gradient(52% 40% at 18% 0%,  rgba(19,168,158,.30) 0%, transparent 68%),
+    radial-gradient(44% 36% at 84% 6%,  rgba(41,98,255,.18) 0%, transparent 68%),
+    radial-gradient(38% 32% at 78% 42%, rgba(139,92,246,.14) 0%, transparent 72%),
+    radial-gradient(30% 26% at 8% 72%,  rgba(230,57,70,.09) 0%, transparent 72%),
+    linear-gradient(180deg,#043D40 0%,#072536 22%,#0A192F 54%,#050B11 100%);
 }
 html.dark .sky::after{
   background-image:
-    linear-gradient(to right, rgba(57,199,232,.135) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(57,199,232,.135) 1px, transparent 1px);
+    linear-gradient(to right, rgba(138,228,242,.085) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(138,228,242,.085) 1px, transparent 1px);
 }
 html.dark .nav{
-  background:rgba(12,20,35,.82);
-  border-color:rgba(255,255,255,.10);
-  box-shadow:0 12px 36px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.06) inset;
+  background:rgba(7,24,36,.84);
+  border-color:rgba(138,228,242,.16);
+  box-shadow:0 12px 36px rgba(2,8,16,.50),0 1px 0 rgba(138,228,242,.08) inset;
 }
 html.dark .nav-links a{color:#CBD5E1;}
-html.dark .nav-links a:hover{color:#FFFFFF;}
-html.dark .theme-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:#CBD5E1;}
-html.dark .theme-btn:hover{background:rgba(255,255,255,.14);color:#FFFFFF;}
-html.dark .eyebrow{color:#34D399;background:rgba(31,191,117,.14);border-color:rgba(52,211,153,.28);}
+html.dark .nav-links a:hover{color:#8AE4F2;}
+html.dark .theme-btn{background:rgba(138,228,242,.08);border-color:rgba(138,228,242,.16);color:#CBD5E1;}
+html.dark .theme-btn:hover{background:rgba(19,168,158,.18);border-color:rgba(138,228,242,.34);color:#FFFFFF;}
+html.dark .eyebrow{color:#8AE4F2;background:rgba(19,168,158,.16);border-color:rgba(138,228,242,.28);}
+html.dark .eyebrow i{background:#13A89E;box-shadow:0 0 0 4px rgba(19,168,158,.24);}
 html.dark .btn-ghost{
-  color:#F1F5F9;background:rgba(15,26,46,.78);
-  border-color:rgba(255,255,255,.14);
-  box-shadow:0 8px 22px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.08) inset;
+  color:#F1F5F9;background:rgba(10,25,47,.82);
+  border-color:rgba(138,228,242,.18);
+  box-shadow:0 8px 22px rgba(2,8,16,.34),0 1px 0 rgba(138,228,242,.08) inset;
 }
-html.dark .btn-ghost:hover{background:#15243D;}
+html.dark .btn-ghost:hover{background:#0E263D;border-color:rgba(41,98,255,.45);}
 html.dark .hero-art svg [stroke="#0A2540"]{stroke:#1B3E68;}
 html.dark .hero-art svg [fill="#0A2540"]{fill:#1B3E68;}
-html.dark .features-head a{color:#34D399;}
+html.dark .features-head a{color:#8AE4F2;}
 html.dark .card{
-  background:linear-gradient(158deg,rgba(15,24,42,.86) 0%,rgba(11,18,32,.84) 58%,rgba(8,14,26,.84) 100%);
-  border-color:rgba(255,255,255,.09);
-  box-shadow:0 14px 30px rgba(0,0,0,.38),0 1px 0 rgba(255,255,255,.05) inset;
+  background:linear-gradient(158deg,rgba(8,32,46,.88) 0%,rgba(10,25,47,.86) 60%,rgba(5,11,17,.90) 100%);
+  border-color:rgba(138,228,242,.14);
+  box-shadow:0 14px 32px rgba(2,8,16,.46),0 1px 0 rgba(138,228,242,.07) inset;
 }
-html.dark .card::after{background-image:radial-gradient(rgba(120,175,235,.32) 1.35px, transparent 1.45px);}
-html.dark .card.card-mint::after{background-image:radial-gradient(rgba(52,211,153,.36) 1.35px, transparent 1.45px);}
+html.dark .card:hover{border-color:rgba(41,98,255,.45);box-shadow:0 18px 40px rgba(2,8,16,.58),0 0 24px rgba(19,168,158,.14);}
+html.dark .card::after{background-image:radial-gradient(rgba(138,228,242,.30) 1.35px, transparent 1.45px);}
+html.dark .card.card-mint::after{background-image:radial-gradient(rgba(19,168,158,.38) 1.35px, transparent 1.45px);}
 html.dark .card-ico{
-  background:#ffffff;border-color:rgba(52,211,153,.28);
-  box-shadow:0 12px 26px rgba(0,0,0,.45),0 0 18px rgba(34,211,238,.18);
+  background:#ffffff;border-color:rgba(138,228,242,.28);
+  box-shadow:0 12px 26px rgba(2,8,16,.48),0 0 18px rgba(19,168,158,.20);
 }
-html.dark .card .tick{color:#34D399;background:rgba(31,191,117,.15);}
-html.dark .faq{background:rgba(14,22,38,.72);border-color:rgba(255,255,255,.08);}
+html.dark .card .tick{color:#8AE4F2;background:rgba(19,168,158,.16);}
+html.dark .faq{background:rgba(7,24,36,.78);border-color:rgba(138,228,242,.13);}
 html.dark .faq-lede{color:#94A3B8;}
-html.dark .faq-list details{background:#0E1626;border-color:rgba(255,255,255,.09);box-shadow:0 14px 34px -26px rgba(0,0,0,.75);}
+html.dark .faq-list details{background:#081D2C;border-color:rgba(138,228,242,.14);box-shadow:0 14px 34px -26px rgba(0,0,0,.78);}
 html.dark .faq-list summary{color:#F1F5F9;}
+html.dark .faq-list summary::after{color:#13A89E;}
 html.dark .faq-list details p{color:#94A3B8;}
-html.dark .faq-list details a{color:#34D399;}
-html.dark .disc-card{background:rgba(14,22,38,.86);border-color:rgba(255,255,255,.09);}
-html.dark .disc-foot{background:linear-gradient(158deg,#0E1B30,#091322);border:1px solid rgba(255,255,255,.10);}
-html.dark footer{background:rgba(8,14,26,.85);border-top-color:rgba(255,255,255,.09);}
+html.dark .faq-list details a{color:#8AE4F2;}
+html.dark .disc-card{background:linear-gradient(158deg,rgba(8,32,46,.86) 0%,rgba(10,25,47,.88) 100%);border-color:rgba(138,228,242,.14);}
+html.dark .disc-card h3::before{background:#E63946;}
+html.dark .disc-foot{background:linear-gradient(158deg,#043D40 0%,#0A192F 60%,#050B11 100%);border:1px solid rgba(138,228,242,.16);}
+html.dark footer{background:rgba(5,11,17,.90);border-top-color:rgba(138,228,242,.12);}
 html.dark .foot-links{color:#CBD5E1;}
-html.dark .foot-links a:hover{color:#34D399;}
+html.dark .foot-links a:hover{color:#8AE4F2;}
 html.dark .legal strong{color:#E2E8F0;}
 html.dark .disclaimer-box{background:rgba(245,130,31,.10);border-color:rgba(245,130,31,.26);color:#FCD39D;}
 html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:rgba(245,130,31,.30);}
+
+/* ---- real terminal preview showcase ---- */
+.preview{padding:clamp(14px,2vw,28px) 0 clamp(44px,5.5vw,76px);}
+.preview-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px;}
+.preview-head .eyebrow{margin-bottom:12px;}
+.preview-sub{margin-top:8px;max-width:62ch;font-size:clamp(14px,1.08vw,15.5px);line-height:1.58;color:var(--qe-slate);}
+.preview-launch{
+  display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;
+  color:var(--qe-teal);padding:9px 16px;border-radius:999px;
+  background:rgba(19,168,158,.10);border:1px solid rgba(19,168,158,.28);
+  transition:transform .18s,background .18s,border-color .18s;
+}
+.preview-launch:hover{transform:translateY(-1px);background:rgba(19,168,158,.18);border-color:rgba(41,98,255,.45);}
+html.dark .preview-launch{color:#8AE4F2;background:rgba(19,168,158,.16);border-color:rgba(138,228,242,.26);}
+html.dark .preview-launch:hover{background:rgba(41,98,255,.22);border-color:rgba(41,98,255,.55);color:#fff;}
+
+.preview-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.preview-tab{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  font-family:var(--qe-font);font-size:13.5px;font-weight:700;
+  padding:9px 16px;border-radius:12px;
+  color:var(--qe-ink);background:rgba(255,255,255,.78);
+  border:1px solid rgba(10,37,64,.11);box-shadow:var(--qe-shadow-sm);
+  transition:all .18s ease;
+}
+.preview-tab i{width:7px;height:7px;border-radius:50%;background:var(--qe-slate-soft);transition:background .18s,box-shadow .18s;}
+.preview-tab:hover{transform:translateY(-1px);border-color:rgba(41,98,255,.42);}
+.preview-tab.is-active{
+  color:#fff;background:linear-gradient(105deg,#04484B 0%,#13A89E 100%);
+  border-color:rgba(138,228,242,.42);box-shadow:0 10px 24px rgba(19,168,158,.28);
+}
+.preview-tab.is-active i{background:#8AE4F2;box-shadow:0 0 0 3px rgba(138,228,242,.28);}
+html.dark .preview-tab{color:#CBD5E1;background:rgba(8,29,44,.82);border-color:rgba(138,228,242,.16);}
+html.dark .preview-tab:hover{color:#fff;border-color:rgba(41,98,255,.55);}
+html.dark .preview-tab.is-active{
+  color:#fff;background:linear-gradient(105deg,rgba(19,168,158,.36) 0%,rgba(41,98,255,.32) 100%);
+  border-color:#8AE4F2;box-shadow:0 10px 26px rgba(19,168,158,.24),0 0 0 1px rgba(138,228,242,.22) inset;
+}
+
+.preview-stage{
+  border-radius:22px;overflow:hidden;
+  background:linear-gradient(160deg,#043D40 0%,#071F30 30%,#0A192F 68%,#050B11 100%);
+  border:1px solid rgba(138,228,242,.22);
+  box-shadow:0 26px 64px rgba(2,8,16,.44),0 0 0 1px rgba(41,98,255,.16);
+}
+.stage-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 16px;background:rgba(5,11,17,.65);border-bottom:1px solid rgba(138,228,242,.14);
+}
+.stage-dots{display:flex;align-items:center;gap:7px;}
+.stage-dots span{width:10px;height:10px;border-radius:50%;display:block;}
+.stage-dots .d-red{background:#E63946;}
+.stage-dots .d-amber{background:#F5821F;}
+.stage-dots .d-green{background:#22C55E;}
+.stage-route{
+  font-family:var(--qe-mono);font-size:11.5px;letter-spacing:.04em;color:#8AE4F2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.stage-zoom{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  font-family:var(--qe-mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:#CBD5E1;background:rgba(138,228,242,.10);border:1px solid rgba(138,228,242,.24);
+  border-radius:999px;padding:5px 11px;transition:all .16s;
+}
+.stage-zoom:hover{color:#fff;background:rgba(41,98,255,.32);border-color:#8AE4F2;}
+
+.stage-media{
+  position:relative;background:#050B11;cursor:zoom-in;
+  aspect-ratio:16/10;max-height:760px;width:100%;display:grid;place-items:center;overflow:hidden;
+}
+.stage-media img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .28s ease;}
+.stage-media:hover img{transform:scale(1.008);}
+
+.stage-foot{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 20px;background:rgba(7,24,36,.88);border-top:1px solid rgba(138,228,242,.14);
+}
+.stage-copy h3{font-size:16px;font-weight:800;color:#F1F5F9;letter-spacing:-.01em;}
+.stage-copy p{margin-top:4px;font-size:13.5px;line-height:1.55;color:#94A3B8;max-width:68ch;}
+.stage-meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-left:auto;}
+.stage-pills{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;}
+.stage-pill{
+  font-family:var(--qe-mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:6px;border:1px solid transparent;white-space:nowrap;
+}
+.pill-teal{color:#34D399;background:rgba(19,168,158,.16);border-color:rgba(19,168,158,.36);}
+.pill-ice{color:#8AE4F2;background:rgba(138,228,242,.12);border-color:rgba(138,228,242,.30);}
+.pill-cobalt{color:#93C5FD;background:rgba(41,98,255,.20);border-color:rgba(41,98,255,.42);}
+.pill-crimson{color:#FDA4AF;background:rgba(230,57,70,.16);border-color:rgba(230,57,70,.38);}
+.pill-violet{color:#C4B5FD;background:rgba(139,92,246,.18);border-color:rgba(139,92,246,.38);}
+.stage-note{font-family:var(--qe-mono);font-size:10.5px;letter-spacing:.05em;color:#7C8FA6;}
+
+.preview-thumbs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px;}
+.preview-thumb{
+  display:flex;flex-direction:column;gap:7px;padding:7px;border-radius:14px;cursor:pointer;text-align:left;
+  background:rgba(255,255,255,.78);border:1px solid rgba(10,37,64,.10);box-shadow:var(--qe-shadow-sm);
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.preview-thumb img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;border-radius:9px;background:#050B11;}
+.preview-thumb span{font-family:var(--qe-mono);font-size:11px;font-weight:700;color:var(--qe-ink);padding:0 3px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.preview-thumb:hover{transform:translateY(-2px);border-color:rgba(41,98,255,.45);}
+.preview-thumb.is-active{border-color:#13A89E;box-shadow:0 0 0 2px rgba(19,168,158,.32),0 10px 24px rgba(19,168,158,.20);}
+html.dark .preview-thumb{background:rgba(8,29,44,.84);border-color:rgba(138,228,242,.15);}
+html.dark .preview-thumb span{color:#CBD5E1;}
+html.dark .preview-thumb.is-active{border-color:#8AE4F2;box-shadow:0 0 0 2px rgba(138,228,242,.28),0 12px 26px rgba(19,168,158,.24);}
+html.dark .preview-thumb.is-active span{color:#8AE4F2;}
+
+.qe-lightbox{
+  position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;
+  background:rgba(3,9,16,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.qe-lightbox.is-open{display:flex;}
+.qe-lb-inner{
+  position:relative;max-width:1320px;width:100%;max-height:92vh;display:flex;flex-direction:column;
+  border-radius:18px;overflow:hidden;background:#050B11;border:1px solid rgba(138,228,242,.26);
+  box-shadow:0 28px 80px rgba(0,0,0,.72);
+}
+.qe-lb-top{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 16px;background:rgba(7,24,36,.92);border-bottom:1px solid rgba(138,228,242,.16);
+}
+.qe-lb-title{font-family:var(--qe-mono);font-size:12px;font-weight:700;color:#8AE4F2;}
+.qe-lb-btns{display:flex;align-items:center;gap:8px;}
+.qe-lb-btn{
+  cursor:pointer;font-family:var(--qe-mono);font-size:12px;font-weight:700;
+  color:#E2E8F0;background:rgba(138,228,242,.10);border:1px solid rgba(138,228,242,.24);
+  border-radius:8px;padding:5px 11px;
+}
+.qe-lb-btn:hover{background:rgba(41,98,255,.34);border-color:#8AE4F2;color:#fff;}
+.qe-lb-img-wrap{overflow:auto;display:grid;place-items:center;background:#050B11;padding:10px;}
+.qe-lb-img-wrap img{max-width:100%;max-height:80vh;width:auto;height:auto;border-radius:8px;}
+
+@media (max-width:960px){
+  .preview-thumbs{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .stage-meta{align-items:flex-start;margin-left:0;}
+  .stage-pills{justify-content:flex-start;}
+}
+@media (max-width:560px){
+  .preview-thumbs{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .stage-zoom span{display:none;}
+}
 @media (max-width:900px){
   .nav-actions .nav-cta{display:none;}
   .nav-toggle{display:inline-flex;}
@@ -650,6 +806,7 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         <span class="brand-word"><b>QUANTUM</b><span><span class="e">EDGE</span> <span class="a">ALPHA</span></span></span>
       </a>
       <div class="nav-links">
+        <a href="#preview">Live Preview</a>
         <a href="#features">Technology</a>
         <a href="/app.html">Solutions</a>
         <a href="#capabilities">Research</a>
@@ -660,8 +817,8 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
           <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a class="btn btn-green nav-toggle" href="/app.html">Get Started</a>
-        <a class="btn btn-green nav-cta" href="/app.html">Get Started</a>
+        <a class="btn btn-green nav-toggle" href="/app.html">Open Terminal</a>
+        <a class="btn btn-green nav-cta" href="/app.html">Open Terminal</a>
       </div>
     </nav>
   </div>
@@ -696,6 +853,76 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         <span class="glyph g-t">&#952;</span>
         <img class="hero-img hero-img-light" src="/assets/brand/hero-quantum-light.webp" alt="" width="560" height="560" decoding="async" fetchpriority="high" />
         <img class="hero-img hero-img-dark" src="/assets/brand/hero-quantum-dark.webp" alt="" width="560" height="560" decoding="async" />
+      </div>
+    </section>
+
+    <section class="preview" id="preview">
+      <div class="preview-head">
+        <div>
+          <span class="eyebrow"><i></i>Real Platform Captures &middot; AXIOM QUANTUM v2</span>
+          <h2 class="section-title">Inside the live trading terminal.</h2>
+          <p class="preview-sub">Real captures straight from QuantumEdge Alpha &mdash; synchronized Monte Carlo cones, 3D SVI volatility surfaces, dealer Greek heatmaps, and QES physics-engine sizing.</p>
+        </div>
+        <a class="preview-launch" href="/app.html">Launch interactive terminal &rarr;</a>
+      </div>
+
+      <div class="preview-tabs" role="tablist" aria-label="Trading terminal screen previews">
+        <button type="button" class="preview-tab is-active" role="tab" aria-selected="true" data-idx="0"><i></i>Fusion Desk</button>
+        <button type="button" class="preview-tab" role="tab" aria-selected="false" data-idx="1"><i></i>3D Vol &amp; Regime</button>
+        <button type="button" class="preview-tab" role="tab" aria-selected="false" data-idx="2"><i></i>Flow &amp; Breadth</button>
+        <button type="button" class="preview-tab" role="tab" aria-selected="false" data-idx="3"><i></i>Strategy &amp; CVaR</button>
+        <button type="button" class="preview-tab" role="tab" aria-selected="false" data-idx="4"><i></i>AlphaPulse Forecast</button>
+      </div>
+
+      <div class="preview-stage">
+        <div class="stage-bar">
+          <div class="stage-dots" aria-hidden="true"><span class="d-red"></span><span class="d-amber"></span><span class="d-green"></span></div>
+          <div class="stage-route" id="qe-stage-route">quantumedgealpha.com/app.html &middot; Fusion Desk</div>
+          <button type="button" class="stage-zoom" id="qe-stage-zoom" aria-label="Expand terminal screenshot">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            <span>Click to zoom</span>
+          </button>
+        </div>
+        <div class="stage-media" id="qe-stage-media" role="button" tabindex="0" aria-label="Click to zoom screenshot">
+          <img id="qe-preview-img" src="/assets/previews/app-fusion.webp" alt="QuantumEdge Alpha Fusion Desk with synchronized price Monte Carlo cone and time by strike exposure heatmap" decoding="async" />
+        </div>
+        <div class="stage-foot">
+          <div class="stage-copy">
+            <h3 id="qe-stage-title">Fusion Desk &mdash; Price Cone &amp; Gamma Heatmap</h3>
+            <p id="qe-stage-desc">Live SPX 0DTE price action overlaid with dealer Call/Put walls, Gamma Flip, P10&ndash;P90 Monte Carlo dispersion cones, and a synchronized time &times; strike exposure heatmap.</p>
+          </div>
+          <div class="stage-meta">
+            <div class="stage-pills" id="qe-stage-pills">
+              <span class="stage-pill pill-teal">Net GEX +$1.84B</span>
+              <span class="stage-pill pill-ice">P10-P90 Monte Carlo</span>
+              <span class="stage-pill pill-crimson">AAD-GEX Confluence</span>
+            </div>
+            <span class="stage-note">Illustrative demo data &middot; Captured from /app.html</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-thumbs" aria-label="Preview thumbnails">
+        <button type="button" class="preview-thumb is-active" data-idx="0">
+          <img src="/assets/previews/app-fusion.webp" alt="Fusion Desk thumbnail" loading="lazy" decoding="async" />
+          <span>01 &middot; Fusion Desk</span>
+        </button>
+        <button type="button" class="preview-thumb" data-idx="1">
+          <img src="/assets/previews/app-vol-regime.webp" alt="3D Vol & Regime thumbnail" loading="lazy" decoding="async" />
+          <span>02 &middot; 3D Vol &amp; Regime</span>
+        </button>
+        <button type="button" class="preview-thumb" data-idx="2">
+          <img src="/assets/previews/app-flow-breadth.webp" alt="Flow & Breadth thumbnail" loading="lazy" decoding="async" />
+          <span>03 &middot; Flow &amp; Breadth</span>
+        </button>
+        <button type="button" class="preview-thumb" data-idx="3">
+          <img src="/assets/previews/app-strategy-cvar.webp" alt="Strategy & CVaR thumbnail" loading="lazy" decoding="async" />
+          <span>04 &middot; Strategy &amp; CVaR</span>
+        </button>
+        <button type="button" class="preview-thumb" data-idx="4">
+          <img src="/assets/previews/app-alphapulse.webp" alt="AlphaPulse Forecast thumbnail" loading="lazy" decoding="async" />
+          <span>05 &middot; AlphaPulse Chart</span>
+        </button>
       </div>
     </section>
 
@@ -862,6 +1089,22 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
   </div>
 </footer>
 
+<div class="qe-lightbox" id="qe-lightbox" role="dialog" aria-modal="true" aria-labelledby="qe-lb-title" hidden>
+  <div class="qe-lb-inner">
+    <div class="qe-lb-top">
+      <div class="qe-lb-title" id="qe-lb-title">Fusion Desk</div>
+      <div class="qe-lb-btns">
+        <button type="button" class="qe-lb-btn" id="qe-lb-prev" aria-label="Previous preview">&larr; Prev</button>
+        <button type="button" class="qe-lb-btn" id="qe-lb-next" aria-label="Next preview">Next &rarr;</button>
+        <button type="button" class="qe-lb-btn" id="qe-lb-close" aria-label="Close lightbox">&times; Close</button>
+      </div>
+    </div>
+    <div class="qe-lb-img-wrap">
+      <img id="qe-lb-img" src="/assets/previews/app-fusion.webp" alt="" />
+    </div>
+  </div>
+</div>
+
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
   (function(){
@@ -881,6 +1124,161 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
       window.dispatchEvent(new Event('qe-theme-change'));
     });
   })();
+  (function(){
+    var slides = [
+      {
+        src: '/assets/previews/app-fusion.webp',
+        route: 'quantumedgealpha.com/app.html · Fusion Desk',
+        title: 'Fusion Desk — Price Cone & Gamma Heatmap',
+        alt: 'QuantumEdge Alpha Fusion Desk with synchronized price Monte Carlo cone and time by strike exposure heatmap',
+        desc: 'Live SPX 0DTE price action overlaid with dealer Call/Put walls, Gamma Flip, P10–P90 Monte Carlo dispersion cones, and a synchronized time × strike exposure heatmap.',
+        pills: [
+          ['Net GEX +$1.84B', 'pill-teal'],
+          ['P10-P90 Monte Carlo', 'pill-ice'],
+          ['AAD-GEX Confluence', 'pill-crimson']
+        ]
+      },
+      {
+        src: '/assets/previews/app-vol-regime.webp',
+        route: 'quantumedgealpha.com/app.html · Vol & Regime',
+        title: '3D SVI Volatility Surface & HMM Regime Engine',
+        alt: 'QuantumEdge Alpha 3D Gatheral SVI volatility surface, Durrleman butterfly arbitrage checks, and 3-state HMM regime monitor',
+        desc: 'Interactive 3D Gatheral SVI volatility surface with live Durrleman butterfly & Roger Lee checks, 3-state Gaussian HMM posteriors, and Halton-QMC dealer feedback simulation.',
+        pills: [
+          ['3D SVI Manifold', 'pill-ice'],
+          ['3-State HMM Viterbi', 'pill-teal'],
+          ['Halton-QMC 25x Var', 'pill-cobalt']
+        ]
+      },
+      {
+        src: '/assets/previews/app-flow-breadth.webp',
+        route: 'quantumedgealpha.com/app.html · Flow & Breadth',
+        title: 'Strike Exposure Ladder & Breadth $ADD Filter',
+        alt: 'QuantumEdge Alpha participant-segmented GEX, DEX, Vanna, and Charm strike ladder with NYSE breadth confirmation',
+        desc: 'Participant-segmented GEX, DEX, Vanna, and Charm strike ladder paired with Advance–Decline GEX tiers and intraday NYSE $ADD / VOLD breadth confirmation.',
+        pills: [
+          ['GEX / DEX / Vanna / Charm', 'pill-teal'],
+          ['Short Gamma Zones', 'pill-crimson'],
+          ['NYSE $ADD + VOLD', 'pill-cobalt']
+        ]
+      },
+      {
+        src: '/assets/previews/app-strategy-cvar.webp',
+        route: 'quantumedgealpha.com/app.html · Strategy & CVaR',
+        title: 'Confidence-Gated Payoff Architect & Simplex CVaR',
+        alt: 'QuantumEdge Alpha multi-leg options payoff architect with dynamic fractional Kelly sizing and Simplex CVaR optimizer',
+        desc: '5-gate strategy recommender, interactive multi-leg payoff & Black-Scholes Greeks architect, dynamic fractional Kelly sizer, and HMM-coupled Simplex CVaR optimizer.',
+        pills: [
+          ['86% Confidence Gate', 'pill-teal'],
+          ['Dynamic Kelly Sizer', 'pill-cobalt'],
+          ['Simplex CVaR Tail Opt', 'pill-violet']
+        ]
+      },
+      {
+        src: '/assets/previews/app-alphapulse.webp',
+        route: 'AlphaPulse Signal · BTC/USD Forecast Overlay',
+        title: 'AlphaPulse Chart — Bid Walls & 90% AI Forecast Cone',
+        alt: 'AlphaPulse BTC/USD candlestick chart showing clustered liquidity bid walls, EMA 20/50 trendlines, and 90 percent AI forecast bands',
+        desc: 'Live liquidity wall clustering ($13.6M–$17.4M bid shelves) combined with EMA 20/50 trend tracking and upper/lower 90% AI forecast confidence envelopes.',
+        pills: [
+          ['Liquidity Bid Walls', 'pill-teal'],
+          ['90% Forecast Bands', 'pill-ice'],
+          ['EMA 20 / 50 Trend', 'pill-cobalt']
+        ]
+      }
+    ];
+    var img = document.getElementById('qe-preview-img');
+    var routeEl = document.getElementById('qe-stage-route');
+    var titleEl = document.getElementById('qe-stage-title');
+    var descEl = document.getElementById('qe-stage-desc');
+    var pillsEl = document.getElementById('qe-stage-pills');
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.preview-tab'));
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.preview-thumb'));
+    var lb = document.getElementById('qe-lightbox');
+    var lbImg = document.getElementById('qe-lb-img');
+    var lbTitle = document.getElementById('qe-lb-title');
+    var mediaEl = document.getElementById('qe-stage-media');
+    var zoomBtn = document.getElementById('qe-stage-zoom');
+    var closeBtn = document.getElementById('qe-lb-close');
+    var prevBtn = document.getElementById('qe-lb-prev');
+    var nextBtn = document.getElementById('qe-lb-next');
+    if(!img || !tabs.length) return;
+    var active = 0;
+
+    function select(idx){
+      active = (idx + slides.length) % slides.length;
+      var s = slides[active];
+      img.src = s.src;
+      img.alt = s.alt;
+      if(routeEl) routeEl.textContent = s.route;
+      if(titleEl) titleEl.textContent = s.title;
+      if(descEl) descEl.textContent = s.desc;
+      if(pillsEl){
+        pillsEl.innerHTML = '';
+        for(var i = 0; i < s.pills.length; i++){
+          var sp = document.createElement('span');
+          sp.className = 'stage-pill ' + s.pills[i][1];
+          sp.textContent = s.pills[i][0];
+          pillsEl.appendChild(sp);
+        }
+      }
+      tabs.forEach(function(b, i){
+        var on = i === active;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      thumbs.forEach(function(b, i){
+        b.classList.toggle('is-active', i === active);
+      });
+      if(lb && lb.classList.contains('is-open')){
+        lbImg.src = s.src;
+        lbImg.alt = s.alt;
+        lbTitle.textContent = s.title;
+      }
+    }
+
+    tabs.forEach(function(b){
+      b.addEventListener('click', function(){ select(Number(b.getAttribute('data-idx') || 0)); });
+    });
+    thumbs.forEach(function(b){
+      b.addEventListener('click', function(){ select(Number(b.getAttribute('data-idx') || 0)); });
+    });
+
+    function openLb(){
+      if(!lb) return;
+      var s = slides[active];
+      lbImg.src = s.src;
+      lbImg.alt = s.alt;
+      lbTitle.textContent = s.title;
+      lb.hidden = false;
+      lb.classList.add('is-open');
+    }
+    function closeLb(){
+      if(!lb) return;
+      lb.classList.remove('is-open');
+      lb.hidden = true;
+    }
+
+    if(mediaEl){
+      mediaEl.addEventListener('click', openLb);
+      mediaEl.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLb(); }
+      });
+    }
+    if(zoomBtn) zoomBtn.addEventListener('click', openLb);
+    if(closeBtn) closeBtn.addEventListener('click', closeLb);
+    if(prevBtn) prevBtn.addEventListener('click', function(){ select(active - 1); });
+    if(nextBtn) nextBtn.addEventListener('click', function(){ select(active + 1); });
+    if(lb){
+      lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+      document.addEventListener('keydown', function(e){
+        if(!lb.classList.contains('is-open')) return;
+        if(e.key === 'Escape') closeLb();
+        else if(e.key === 'ArrowLeft') select(active - 1);
+        else if(e.key === 'ArrowRight') select(active + 1);
+      });
+    }
+  })();
   // smooth in-page anchors already handled by CSS; keep nav pill compact on scroll
 </script>
 
@@ -891,9 +1289,9 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
   if(!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d', { alpha: true });
   var TAU = Math.PI * 2;
-  var GREEN = '16,245,168', CYAN = '0,232,255', BLUE = '24,144,255', ORANGE = '255,148,36', MAGENTA = '232,72,196';
+  var GREEN = '34,197,94', CYAN = '138,228,242', BLUE = '41,98,255', ORANGE = '245,130,31', MAGENTA = '139,92,246';
   function isDark(){ return document.documentElement.classList.contains('dark'); }
-  function getInk(){ return isDark() ? '148,210,255' : '12,68,128'; }
+  function getInk(){ return isDark() ? '138,228,242' : '12,68,128'; }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W = 0, H = 0, dpr = 1, stars = [], atoms = [], t = 0, last = 0, started = false;
   var ptr = { mx: 0, my: 0, sx: 0, sy: 0, active: false };
