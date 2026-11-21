@@ -885,49 +885,50 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
 </script>
 
 <script>
-/* ---- interactive quantum field: mouse-following atoms + glowing constellation particles ---- */
+/* ---- interactive quantum field: shiny corner dot matrices, neon 3D wave-grid, floor grid & compact mouse-following atoms ---- */
 (function(){
   var cv = document.getElementById('heroField');
   if(!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d', { alpha: true });
   var TAU = Math.PI * 2;
-  var GREEN = '31,191,117', CYAN = '39,199,232', ORANGE = '245,130,31';
+  var GREEN = '16,245,168', CYAN = '0,232,255', BLUE = '24,144,255', ORANGE = '255,148,36', MAGENTA = '232,72,196';
   function isDark(){ return document.documentElement.classList.contains('dark'); }
-  function getInk(){ return isDark() ? '148,196,240' : '10,37,64'; }
+  function getInk(){ return isDark() ? '148,210,255' : '12,68,128'; }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W = 0, H = 0, dpr = 1, stars = [], atoms = [], t = 0, last = 0, started = false;
   var ptr = { mx: 0, my: 0, sx: 0, sy: 0, active: false };
 
   function build(){
     var tiny = W < 760;
-    var area = W * H, n = Math.round(Math.min(tiny ? 85 : 165, Math.max(52, area / 11500))), i;
+    var area = W * H, n = Math.round(Math.min(tiny ? 75 : 145, Math.max(48, area / 12800))), i;
     stars = [];
     for(i = 0; i < n; i++){
-      var near = Math.random() < 0.28;
+      var near = Math.random() < 0.30;
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: near ? 1.6 + Math.random() * 1.7 : 0.75 + Math.random() * 1.2,
+        r: near ? 1.5 + Math.random() * 1.5 : 0.75 + Math.random() * 1.1,
         z: 0.30 + Math.random() * 0.70,
         a: Math.random() * TAU,
         s: 0.40 + Math.random() * 1.15,
         vx: (Math.random() - 0.5) * 0.08,
         vy: (Math.random() - 0.5) * 0.08,
-        c: near ? (i % 3 === 0 ? ORANGE : (Math.random() < 0.55 ? GREEN : CYAN)) : null
+        c: near ? (i % 5 === 0 ? MAGENTA : (i % 4 === 0 ? ORANGE : (Math.random() < 0.5 ? GREEN : CYAN))) : null
       });
     }
     var scale = Math.min(W, H) || 480;
-    /* 5 distributed atoms across the viewport: [rx, ry, radiusFrac, baseRot, followStrength, hue] */
+    /* 6 delicate micro-atoms (subdued so constellations, neon waves & hero take forefront) */
     var spec = [
-      [0.24, 0.30, 0.20,  0.15, 0.62, CYAN],
-      [0.09, 0.22, 0.24, -0.22, 0.26, GREEN],
-      [0.89, 0.19, 0.20, -0.35, 0.32, CYAN],
-      [0.82, 0.80, 0.18,  0.55, 0.40, ORANGE],
-      [0.16, 0.78, 0.16, -0.45, 0.20, GREEN]
+      [0.24, 0.32, 0.042,  0.18, 0.56, CYAN],
+      [0.11, 0.24, 0.036, -0.25, 0.26, GREEN],
+      [0.86, 0.20, 0.034, -0.35, 0.32, CYAN],
+      [0.78, 0.76, 0.033,  0.52, 0.38, ORANGE],
+      [0.44, 0.24, 0.028, -0.60, 0.44, MAGENTA],
+      [0.18, 0.74, 0.030,  0.42, 0.22, GREEN]
     ];
     atoms = [];
     for(i = 0; i < spec.length; i++){
-      var p = spec[i], R = Math.max(46, scale * p[2]);
+      var p = spec[i], R = Math.max(16, scale * p[2]);
       var hx = W * p[0], hy = H * p[1];
       atoms.push({
         homeX: hx, homeY: hy,
@@ -936,13 +937,13 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         R: R, rot: p[3],
         followStrength: p[4],
         driftPh: i * 1.37,
-        spin: (i % 2 ? -1 : 1) * (0.075 + 0.024 * i),
+        spin: (i % 2 ? -1 : 1) * (0.11 + 0.03 * i),
         hue: p[5],
-        r: Math.max(2.6, R * 0.082),
+        r: Math.max(1.5, R * 0.105),
         rings: [
-          { rx: 1.00, ry: 0.30, tilt:  0.22, w:  0.48, ph: Math.random() * TAU },
-          { rx: 0.76, ry: 0.26, tilt: -1.04, w: -0.62, ph: Math.random() * TAU },
-          { rx: 0.90, ry: 0.17, tilt:  1.34, w:  0.38, ph: Math.random() * TAU }
+          { rx: 1.00, ry: 0.31, tilt:  0.24, w:  0.65, ph: Math.random() * TAU },
+          { rx: 0.78, ry: 0.26, tilt: -1.04, w: -0.78, ph: Math.random() * TAU },
+          { rx: 0.90, ry: 0.18, tilt:  1.34, w:  0.52, ph: Math.random() * TAU }
         ]
       });
     }
@@ -963,32 +964,221 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
     draw(0);
   }
 
-  function starLayer(){
-    var i, j, st, ink = getInk(), dark = isDark();
-    for(i = 0; i < stars.length; i++){
-      st = stars[i];
-      var tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * st.s + st.a));
-      ctx.globalAlpha = (dark ? 0.26 : 0.24) + (dark ? 0.58 : 0.52) * tw * st.z;
-      ctx.fillStyle = 'rgb(' + (st.c || ink) + ')';
+  function perspectiveFloorGridLayer(){
+    var dark = isDark();
+    var yTop = H * 0.72, yBot = H * 0.985;
+    var parX = ptr.active ? ((ptr.sx / Math.max(1, W)) - 0.5) * 44 : 0;
+    var vx = W * 0.62 + parX;
+    var topHalf = W * 0.22;
+    var botHalf = W * 0.56;
+    var rows = 10, cols = 14, i;
+
+    ctx.save();
+    /* Horizontal foreshortened grid lines */
+    for(i = 0; i <= rows; i++){
+      var p = i / rows;
+      var z = p * p;
+      var y = yTop + (yBot - yTop) * z;
+      var half = topHalf + (botHalf - topHalf) * z;
+      var fade = Math.sin(p * Math.PI);
+      ctx.globalAlpha = (dark ? 0.34 : 0.28) * (0.25 + 0.75 * fade);
+      ctx.strokeStyle = 'rgb(' + (dark ? CYAN : BLUE) + ')';
+      ctx.lineWidth = 0.85 + z * 0.45;
       ctx.beginPath();
-      ctx.arc(st.x, st.y, st.r, 0, TAU);
-      ctx.fill();
-      if(st.r > 1.75){
-        ctx.globalAlpha = 0.12 * tw;
-        ctx.beginPath();
-        ctx.arc(st.x, st.y, st.r * 4.4, 0, TAU);
-        ctx.fill();
+      ctx.moveTo(vx - half, y);
+      ctx.lineTo(vx + half, y);
+      ctx.stroke();
+    }
+    /* Converging perspective rays */
+    for(i = 0; i <= cols; i++){
+      var cp = (i / cols) * 2 - 1;
+      var edgeFade = 1 - Math.abs(cp) * 0.42;
+      ctx.globalAlpha = (dark ? 0.30 : 0.25) * edgeFade;
+      ctx.strokeStyle = 'rgb(' + (dark ? CYAN : BLUE) + ')';
+      ctx.lineWidth = 0.95;
+      ctx.beginPath();
+      ctx.moveTo(vx + cp * topHalf, yTop);
+      ctx.lineTo(vx + cp * botHalf, yBot);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function cornerMatrixLayer(){
+    var dark = isDark();
+    var step = W < 640 ? 10 : 12;
+    var sq = W < 640 ? 3.6 : 4.4;
+    var clusters = [
+      { ox: 18, oy: 92, cols: 10, rows: 7, cornerX: 0, cornerY: 0 },
+      { ox: 18, oy: Math.max(240, H - 102), cols: 11, rows: 6, cornerX: 0, cornerY: 1 },
+      { ox: Math.max(200, W - 118), oy: 92, cols: 8, rows: 5, cornerX: 1, cornerY: 0 }
+    ];
+
+    function roundSq(x, y, s, r){
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + s - r, y);
+      ctx.quadraticCurveTo(x + s, y, x + s, y + r);
+      ctx.lineTo(x + s, y + s - r);
+      ctx.quadraticCurveTo(x + s, y + s, x + s - r, y + s);
+      ctx.lineTo(x + r, y + s);
+      ctx.quadraticCurveTo(x, y + s, x, y + s - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    for(var ci = 0; ci < clusters.length; ci++){
+      var cl = clusters[ci];
+      for(var row = 0; row < cl.rows; row++){
+        for(var col = 0; col < cl.cols; col++){
+          var nx = cl.cornerX === 0 ? col / Math.max(1, cl.cols - 1) : 1 - col / Math.max(1, cl.cols - 1);
+          var ny = cl.cornerY === 0 ? row / Math.max(1, cl.rows - 1) : 1 - row / Math.max(1, cl.rows - 1);
+          var falloff = Math.max(0.08, 1 - (nx * 0.62 + ny * 0.62));
+          if(falloff < 0.14) continue;
+
+          var px = cl.ox + col * step;
+          var py = cl.oy + row * step;
+          var shimmer = 0.5 + 0.5 * Math.sin(col * 0.58 + row * 0.42 - t * 2.6 + ci * 1.4);
+          var ptrBoost = 0;
+          if(ptr.active){
+            var pd = Math.hypot(px - ptr.sx, py - ptr.sy);
+            if(pd < 240) ptrBoost = (1 - pd / 240) * 0.65;
+          }
+          var intensity = Math.min(1, falloff * (0.48 + 0.52 * shimmer) + ptrBoost);
+
+          /* Outer neon cyan gleam halo */
+          ctx.globalAlpha = intensity * (dark ? 0.36 : 0.28);
+          ctx.fillStyle = 'rgb(' + CYAN + ')';
+          roundSq(px - 1.6, py - 1.6, sq + 3.2, 2.0);
+          ctx.fill();
+
+          /* Crisp rounded square tile */
+          ctx.globalAlpha = intensity * (dark ? 0.88 : 0.78);
+          ctx.fillStyle = intensity > 0.68 ? 'rgb(' + CYAN + ')' : 'rgb(' + BLUE + ')';
+          roundSq(px, py, sq, 1.1);
+          ctx.fill();
+
+          /* Shiny pearl-white specular gleam core */
+          if(intensity > 0.32){
+            ctx.globalAlpha = Math.min(0.95, intensity * 0.92);
+            ctx.fillStyle = 'rgb(255,255,255)';
+            roundSq(px + sq * 0.20, py + sq * 0.20, sq * 0.58, 0.7);
+            ctx.fill();
+          }
+        }
       }
     }
-    /* constellation web */
-    var cell = 128, grid = {}, key;
+    ctx.globalAlpha = 1;
+  }
+
+  function waveMeshLayer(){
+    var dark = isDark();
+    var U = 64, V = 10;
+    var ribbons = [
+      { yBase: 0.43, amp: 32, freq: 6.2, speed: 1.05, spreadY: 5.8, tilt: 3.4, primary: CYAN, accent: BLUE },
+      { yBase: 0.55, amp: 26, freq: 5.4, speed: -0.88, spreadY: 5.2, tilt: -2.8, primary: BLUE, accent: GREEN }
+    ];
+
+    for(var ri = 0; ri < ribbons.length; ri++){
+      var rb = ribbons[ri];
+      var pts = [];
+      for(var v = 0; v < V; v++){
+        var rowPts = [];
+        var vf = (v / (V - 1)) - 0.5;
+        for(var u = 0; u <= U; u++){
+          var p = u / U;
+          var env = Math.sin(p * Math.PI);
+          var x = p * W;
+          var carrier = Math.sin(p * rb.freq + t * rb.speed + ri * 1.4 + vf * 0.42);
+          var harmonic = Math.cos(p * (rb.freq * 1.65) - t * rb.speed * 0.7 + vf * 0.85);
+          var twist = carrier * rb.amp * env + harmonic * 10 * env;
+          var ribbonWidth = (rb.spreadY + Math.cos(p * 4.5 + t * 0.8) * rb.tilt) * vf * (0.45 + 0.85 * env);
+          var y = H * rb.yBase + twist + ribbonWidth;
+          if(ptr.active){
+            var dx = x - ptr.sx, dy = y - ptr.sy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if(dist < 240){
+              var pull = (1 - dist / 240);
+              y += (ptr.sy - y) * pull * 0.16;
+            }
+          }
+          rowPts.push({ x: x, y: y, env: env });
+        }
+        pts.push(rowPts);
+      }
+
+      /* 1. Soft neon bloom under-glow along outer strands */
+      ctx.lineCap = 'round';
+      for(v = 0; v < V; v += 2){
+        ctx.beginPath();
+        for(u = 0; u <= U; u++){
+          var pt = pts[v][u];
+          if(u === 0) ctx.moveTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
+        }
+        ctx.lineWidth = dark ? 4.4 : 4.0;
+        ctx.globalAlpha = dark ? 0.14 : 0.12;
+        ctx.strokeStyle = 'rgb(' + rb.primary + ')';
+        ctx.stroke();
+      }
+
+      /* 2. Crisp longitudinal neon cyan/blue wave splines */
+      for(v = 0; v < V; v++){
+        var edgeDim = 1 - Math.abs((v / (V - 1)) - 0.5) * 0.55;
+        ctx.beginPath();
+        for(u = 0; u <= U; u++){
+          var sp = pts[v][u];
+          if(u === 0) ctx.moveTo(sp.x, sp.y);
+          else ctx.lineTo(sp.x, sp.y);
+        }
+        ctx.lineWidth = v % 3 === 0 ? 1.45 : 1.05;
+        ctx.globalAlpha = (dark ? 0.56 : 0.50) * edgeDim;
+        ctx.strokeStyle = 'rgb(' + (v % 3 === 0 ? CYAN : rb.primary) + ')';
+        ctx.stroke();
+      }
+
+      /* 3. Transverse cross-mesh grid ribs ("grid that is a wave") */
+      ctx.lineWidth = 0.9;
+      for(u = 2; u < U; u += 2){
+        var cEnv = pts[0][u].env;
+        if(cEnv < 0.08) continue;
+        ctx.globalAlpha = (dark ? 0.36 : 0.32) * cEnv;
+        ctx.strokeStyle = 'rgb(' + (u % 6 === 0 ? rb.accent : CYAN) + ')';
+        ctx.beginPath();
+        ctx.moveTo(pts[0][u].x, pts[0][u].y);
+        ctx.lineTo(pts[V - 1][u].x, pts[V - 1][u].y);
+        ctx.stroke();
+
+        if(u % 6 === 0){
+          var mid = pts[Math.floor(V / 2)][u];
+          ctx.globalAlpha = (dark ? 0.85 : 0.72) * cEnv;
+          ctx.fillStyle = 'rgb(255,255,255)';
+          ctx.beginPath();
+          ctx.arc(mid.x, mid.y, 1.85, 0, TAU);
+          ctx.fill();
+          ctx.globalAlpha = (dark ? 0.35 : 0.28) * cEnv;
+          ctx.fillStyle = 'rgb(' + CYAN + ')';
+          ctx.beginPath();
+          ctx.arc(mid.x, mid.y, 5.2, 0, TAU);
+          ctx.fill();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function starLayer(){
+    var i, j, st, ink = getInk(), dark = isDark();
+    /* Constellation web brought to the forefront with neon cyan/blue filaments */
+    var cell = 148, grid = {}, key;
     for(i = 0; i < stars.length; i++){
       st = stars[i];
       key = Math.floor(st.x / cell) + ':' + Math.floor(st.y / cell);
       (grid[key] || (grid[key] = [])).push(st);
     }
-    ctx.lineWidth = 1.0;
-    ctx.strokeStyle = 'rgb(' + ink + ')';
+    ctx.lineWidth = 1.2;
     for(i = 0; i < stars.length; i++){
       st = stars[i];
       var gx = Math.floor(st.x / cell), gy = Math.floor(st.y / cell);
@@ -1000,8 +1190,10 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
             var o = bucket[j];
             if(o === st || o.x < st.x) continue;
             var dx = o.x - st.x, dy = o.y - st.y, d = Math.sqrt(dx * dx + dy * dy);
-            if(d > cell * 1.05) continue;
-            ctx.globalAlpha = (1 - d / (cell * 1.05)) * (dark ? 0.30 : 0.24);
+            if(d > cell * 1.08) continue;
+            var str = 1 - d / (cell * 1.08);
+            ctx.globalAlpha = str * (dark ? 0.50 : 0.40);
+            ctx.strokeStyle = 'rgb(' + (st.c || (dark ? CYAN : BLUE)) + ')';
             ctx.beginPath();
             ctx.moveTo(st.x, st.y);
             ctx.lineTo(o.x, o.y);
@@ -1011,25 +1203,48 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
       }
     }
 
-    /* mouse glow halo + bright energy tethers to nearby stars and atom cores */
+    for(i = 0; i < stars.length; i++){
+      st = stars[i];
+      var tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * st.s + st.a));
+      ctx.globalAlpha = (dark ? 0.42 : 0.36) + (dark ? 0.56 : 0.50) * tw * st.z;
+      ctx.fillStyle = 'rgb(' + (st.c || ink) + ')';
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r * 1.08, 0, TAU);
+      ctx.fill();
+      if(st.r > 1.55){
+        ctx.globalAlpha = (dark ? 0.24 : 0.18) * tw;
+        ctx.fillStyle = 'rgb(' + (st.c || CYAN) + ')';
+        ctx.beginPath();
+        ctx.arc(st.x, st.y, st.r * 4.2, 0, TAU);
+        ctx.fill();
+
+        ctx.globalAlpha = 0.82 * tw;
+        ctx.fillStyle = 'rgb(255,255,255)';
+        ctx.beginPath();
+        ctx.arc(st.x, st.y, st.r * 0.48, 0, TAU);
+        ctx.fill();
+      }
+    }
+
+    /* mouse glow halo + bright neon constellation web toward pointer */
     if(ptr.active){
-      var halo = ctx.createRadialGradient(ptr.sx, ptr.sy, 0, ptr.sx, ptr.sy, 170);
-      halo.addColorStop(0, 'rgba(' + CYAN + ',' + (dark ? '0.20' : '0.16') + ')');
-      halo.addColorStop(0.5, 'rgba(' + GREEN + ',' + (dark ? '0.08' : '0.06') + ')');
+      var halo = ctx.createRadialGradient(ptr.sx, ptr.sy, 0, ptr.sx, ptr.sy, 175);
+      halo.addColorStop(0, 'rgba(' + CYAN + ',' + (dark ? '0.24' : '0.20') + ')');
+      halo.addColorStop(0.5, 'rgba(' + GREEN + ',' + (dark ? '0.09' : '0.07') + ')');
       halo.addColorStop(1, 'rgba(' + CYAN + ',0)');
       ctx.globalAlpha = 1;
       ctx.fillStyle = halo;
       ctx.beginPath();
-      ctx.arc(ptr.sx, ptr.sy, 170, 0, TAU);
+      ctx.arc(ptr.sx, ptr.sy, 175, 0, TAU);
       ctx.fill();
 
-      ctx.lineWidth = 1.05;
+      ctx.lineWidth = 1.25;
       for(i = 0; i < stars.length; i++){
         st = stars[i];
         var cdx = st.x - ptr.sx, cdy = st.y - ptr.sy;
         var cd = Math.sqrt(cdx * cdx + cdy * cdy);
-        if(cd < 205){
-          ctx.globalAlpha = (1 - cd / 205) * (dark ? 0.42 : 0.34);
+        if(cd < 235){
+          ctx.globalAlpha = (1 - cd / 235) * (dark ? 0.62 : 0.50);
           ctx.strokeStyle = 'rgb(' + (st.c || CYAN) + ')';
           ctx.beginPath();
           ctx.moveTo(ptr.sx, ptr.sy);
@@ -1041,10 +1256,10 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         var a = atoms[i];
         var adx = a.cx - ptr.sx, ady = a.cy - ptr.sy;
         var ad = Math.sqrt(adx * adx + ady * ady);
-        if(ad < 320){
-          ctx.globalAlpha = (1 - ad / 320) * 0.28;
+        if(ad < 260){
+          ctx.globalAlpha = (1 - ad / 260) * 0.24;
           ctx.strokeStyle = 'rgb(' + a.hue + ')';
-          ctx.lineWidth = 1.1;
+          ctx.lineWidth = 0.95;
           ctx.beginPath();
           ctx.moveTo(ptr.sx, ptr.sy);
           ctx.lineTo(a.cx, a.cy);
@@ -1059,17 +1274,17 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
     var dark = isDark();
     for(var i = 0; i < atoms.length; i++){
       var a = atoms[i];
-      var pulse = 0.72 + 0.28 * Math.sin(t * 1.1 + i);
-      var g = ctx.createRadialGradient(a.cx, a.cy, 0, a.cx, a.cy, a.r * 6.5);
-      g.addColorStop(0, 'rgba(' + a.hue + ',' + ((dark ? 0.48 : 0.42) * pulse) + ')');
+      var pulse = 0.72 + 0.28 * Math.sin(t * 1.15 + i);
+      var g = ctx.createRadialGradient(a.cx, a.cy, 0, a.cx, a.cy, a.r * 4.5);
+      g.addColorStop(0, 'rgba(' + a.hue + ',' + ((dark ? 0.36 : 0.30) * pulse) + ')');
       g.addColorStop(1, 'rgba(' + a.hue + ',0)');
       ctx.globalAlpha = 1;
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(a.cx, a.cy, a.r * 6.5, 0, TAU);
+      ctx.arc(a.cx, a.cy, a.r * 4.5, 0, TAU);
       ctx.fill();
 
-      ctx.fillStyle = 'rgba(' + a.hue + ',0.95)';
+      ctx.fillStyle = 'rgba(' + a.hue + ',0.78)';
       ctx.beginPath();
       ctx.arc(a.cx, a.cy, a.r, 0, TAU);
       ctx.fill();
@@ -1082,44 +1297,23 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         var rx = a.R * ring.rx, ry = a.R * ring.ry;
         ctx.save();
         ctx.rotate(ring.tilt);
-        ctx.globalAlpha = dark ? 0.62 : 0.52;
+        ctx.globalAlpha = dark ? 0.42 : 0.36;
         ctx.strokeStyle = 'rgba(' + a.hue + ',0.85)';
-        ctx.lineWidth = 1.35;
+        ctx.lineWidth = 1.0;
         ctx.beginPath();
         ctx.ellipse(0, 0, rx, ry, 0, 0, TAU);
         ctx.stroke();
 
         var ang = ring.ph + t * ring.w;
         var ex = Math.cos(ang) * rx, ey = Math.sin(ang) * ry;
-        ctx.globalAlpha = 0.98;
-        ctx.fillStyle = 'rgba(' + a.hue + ',0.98)';
+        ctx.globalAlpha = 0.85;
+        ctx.fillStyle = 'rgb(255,255,255)';
         ctx.beginPath();
-        ctx.arc(ex, ey, Math.max(2.1, a.r * 0.48), 0, TAU);
-        ctx.fill();
-        ctx.globalAlpha = 0.26;
-        ctx.beginPath();
-        ctx.arc(ex, ey, Math.max(5.5, a.r * 2.15), 0, TAU);
+        ctx.arc(ex, ey, Math.max(1.3, a.r * 0.38), 0, TAU);
         ctx.fill();
         ctx.restore();
       }
       ctx.restore();
-    }
-    ctx.globalAlpha = 1;
-  }
-
-  function waveLayer(){
-    var cy = H * 0.54, startX = W * 0.28;
-    for(var band = 0; band < 4; band++){
-      ctx.fillStyle = band % 2 === 0 ? 'rgba(' + CYAN + ',0.38)' : 'rgba(' + GREEN + ',0.34)';
-      for(var x = startX; x <= W; x += 10){
-        var p = (x - startX) / Math.max(1, W - startX);
-        var env = Math.sin(p * Math.PI);
-        var y = cy + Math.sin(p * 7.5 + t * 0.95 + band * 0.55) * (26 + band * 8) * env + (band - 1.5) * 9;
-        ctx.globalAlpha = 0.12 + 0.26 * env;
-        ctx.beginPath();
-        ctx.arc(x, y, 1.45, 0, TAU);
-        ctx.fill();
-      }
     }
     ctx.globalAlpha = 1;
   }
@@ -1138,8 +1332,8 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
         if(ptr.active){
           var dx = ptr.sx - st.x, dy = ptr.sy - st.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if(dist < 230 && dist > 22){
-            var pull = (1 - dist / 230) * 0.45 * st.z * step60;
+          if(dist < 225 && dist > 22){
+            var pull = (1 - dist / 225) * 0.45 * st.z * step60;
             st.x += (dx / dist) * pull - (dy / dist) * pull * 0.28;
             st.y += (dy / dist) * pull + (dx / dist) * pull * 0.28;
           }
@@ -1152,26 +1346,28 @@ html.dark .demo-flag{color:#FBBF24;background:rgba(245,130,31,.14);border-color:
 
       for(var ai = 0; ai < atoms.length; ai++){
         var a = atoms[ai];
-        var floatX = Math.cos(t * 0.45 + a.driftPh) * 16;
-        var floatY = Math.sin(t * 0.38 + a.driftPh) * 14;
+        var floatX = Math.cos(t * 0.45 + a.driftPh) * 14;
+        var floatY = Math.sin(t * 0.38 + a.driftPh) * 12;
         var tx = a.homeX + floatX;
         var ty = a.homeY + floatY;
         if(ptr.active){
-          var orbX = Math.cos(t * 0.75 + a.driftPh) * (ai === 0 ? 34 : 52);
-          var orbY = Math.sin(t * 0.75 + a.driftPh) * (ai === 0 ? 34 : 52);
+          var orbX = Math.cos(t * 0.82 + a.driftPh) * (ai === 0 ? 28 : 42);
+          var orbY = Math.sin(t * 0.82 + a.driftPh) * (ai === 0 ? 28 : 42);
           var f = a.followStrength;
           tx = tx * (1 - f) + (ptr.sx + orbX) * f;
           ty = ty * (1 - f) + (ptr.sy + orbY) * f;
         }
-        a.vx = (a.vx + (tx - a.cx) * 0.045) * 0.84;
-        a.vy = (a.vy + (ty - a.cy) * 0.045) * 0.84;
+        a.vx = (a.vx + (tx - a.cx) * 0.048) * 0.84;
+        a.vy = (a.vy + (ty - a.cy) * 0.048) * 0.84;
         a.cx += a.vx * step60;
         a.cy += a.vy * step60;
       }
     }
-    starLayer();
-    waveLayer();
+    perspectiveFloorGridLayer();
     atomLayer();
+    waveMeshLayer();
+    cornerMatrixLayer();
+    starLayer();
   }
 
   function frame(now){
